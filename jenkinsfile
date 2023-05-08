@@ -14,7 +14,7 @@ pipeline {
         stage('Example') {
             steps {
                     bat 'mkdir Build_%BUILD_ID%'
-                    bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%/'
+                    bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
                 }
             }
         }
