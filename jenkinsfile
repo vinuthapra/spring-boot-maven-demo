@@ -2,21 +2,21 @@ pipeline {
     agent any
     stages {
         stage('scm checkout') {
-        steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
-        }
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
+            }
         }
         stage('Build') {
             steps {
-               
                 bat 'start /b mvn clean package -DskipTests'
             }
         }
         stage ('cp target to app') {
-          steps{
-            bat 'mkdir Build_%BUILD_ID% && copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
-
-          }
+            steps{
+                dir('spring-boot-maven-demo') {
+                    bat 'mkdir Build_%BUILD_ID% && copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
+                }
+            }
+        }
     }
-}
 }
