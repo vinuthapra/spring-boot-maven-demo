@@ -12,7 +12,9 @@ pipeline {
                                 trim: true
                             )
                             ])
-      
+                            }
+                            }
+                            }
       stage('scm checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
