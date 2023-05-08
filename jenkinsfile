@@ -13,8 +13,9 @@ pipeline {
         }
         stage('cp target to app') {
             steps {
-                    bat 'cd'
-                    bat 'mkdir Build_%BUILD_ID% && copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
+                    bat 'mkdir Build_%BUILD_ID%'
+                    bat 'cd target'
+                    bat 'copy demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
                 }
             }
         }
