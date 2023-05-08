@@ -14,7 +14,6 @@ pipeline {
         stage('cp target to app') {
             steps {
              dir('target') {
-                    bat 'cd target'
                     bat 'mkdir Build_%BUILD_ID%'
                     bat 'demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
                 }
