@@ -14,8 +14,7 @@ pipeline {
         }
         stage ('cp target to app') {
           steps{
-            bat 'set TIMESTAMP=%date:~-4%_%date:~-7,2%_%date:~-10,2%_%time:~0,2%_%time:~3,2%_%time:~6,2%'
-            bat 'rename Build_${BUILD_ID} Build_${BUILD_ID}_%TIMESTAMP%'
+            bat '${BUILD_ID}'
             bat 'mkdir -p Build_${BUILD_ID} && copy target/demo-0.0.1-SNAPSHOT.jar Build_${BUILD_ID}'
 
           }
