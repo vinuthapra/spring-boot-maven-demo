@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('cp target to app') {
           steps{
-            sh 'mkdir Build_${BUILD_ID} && cp target/demo-0.0.1-SNAPSHOT.jar Build_${BUILD_ID}'
+            bat 'mkdir Build_${BUILD_ID} && cp target/demo-0.0.1-SNAPSHOT.jar Build_${BUILD_ID}'
           }
     }
 }
