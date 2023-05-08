@@ -13,10 +13,8 @@ pipeline {
         }
         stage('Copy Jar to Build Directory') {
     steps {
-        dir('target') {
-            bat "dir target"
             bat "mkdir Build_${BUILD_ID}"
-            bat "copy demo-0.0.1-SNAPSHOT.jar Build_${BUILD_ID}/"
+            bat "copy target/demo-0.0.1-SNAPSHOT.jar Build_${BUILD_ID}/"
         }
     }
 }
