@@ -22,11 +22,10 @@ pipeline {
       stage('commit message') {
          steps {
             script {
-               sh '''
-                  BUILD_ID=$(date +%Y-%m-%d-%H-%M-%S)
-                  git commit --message="Build ID: $BUILD_ID"
-                  git push
-               '''
+                bat  'BUILD_ID=$(date +%Y-%m-%d-%H-%M-%S)'
+                bat  'git commit --message="Build ID: $BUILD_ID'
+                bat  'git push'
+               
             }
          }
       }
