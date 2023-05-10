@@ -21,9 +21,7 @@ pipeline {
         }
         stage('Commit Build ID') {
             steps {
-                bat "SET buildId=%BUILD_NUMBER%"
-                bat 'git commit -am "Build ID: %buildId%"'
-                bat 'git push origin main'
+                bat 'echo "Commit ID: %GITHUB_SHA%, Build ID: %BUILD_ID%"'
             }
         }
     }

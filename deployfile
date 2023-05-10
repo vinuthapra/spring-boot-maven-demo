@@ -21,5 +21,8 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
             }
         }
+        cp %BUILD_ID deploy
+        cd deploy
+        java -jar
 }
 }
