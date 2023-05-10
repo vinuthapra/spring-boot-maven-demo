@@ -15,18 +15,15 @@ pipeline {
         }
         stage('copy jars') {
             steps {
-                bat 'mkdir Build_%BUILD_ID%'
-                bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
+                bat 'mkdir Build_%BUILD_NUMBER%'
+                bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_NUMBER%'
             }
         }
         stage('Commit Build ID') {
             steps {
-                script {
-                    def %BUILD_ID% = env.BUILD_NUMBER
-                    def commitMessage = "Build ID: ${buildId}"
-                    sh "git commit -am '${commitMessage}'"
-                    sh "git push origin main"
-                }
+                bat "SET buildId=%BUILD_NUMBER%"
+                bat 'git commit -am "Build ID: %buildId%"'
+                bat 'git push origin master'
             }
         }
     }
