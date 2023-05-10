@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-       stage('scm checkout') {
+        stage('scm checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
             }
@@ -15,20 +15,18 @@ pipeline {
         }
         stage('copy jars') {
             steps {
-                    bat 'mkdir Build_%BUILD_ID%'
-                    bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
+                bat 'mkdir Build_%BUILD_ID%'
+                bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
+            }
+        }
+        stage('commit message') {
+            steps {
+                script {
+                    def date = Get-Date -Format 'yyyy-MM-dd-HH-mm-ss'
+                    bat "git commit --message='Build ID: $date'"
+                    bat 'git push'
                 }
             }
-      stage('commit message') {
-         steps {
-            script {
-                bat  'BUILD_ID=$(date +%Y-%m-%d-%H-%M-%S)'
-                bat  'git commit --message="Build ID: $BUILD_ID'
-                bat  'git push'
-               
-            }
-         }
-      }
-   }
+        }
+    }
 }
-
