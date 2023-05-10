@@ -23,7 +23,7 @@ pipeline {
             steps {
                 bat "SET buildId=%BUILD_NUMBER%"
                 bat 'git commit -am "Build ID: %buildId%"'
-                bat 'git push origin master'
+                bat 'git push origin main'
             }
         }
     }
