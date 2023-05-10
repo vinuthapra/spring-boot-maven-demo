@@ -19,12 +19,13 @@ pipeline {
                 bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
             }
         }
-        stage('commit message') {
+        stage('Commit Build ID') {
             steps {
                 script {
-                    def date = Get-Date -Format 'yyyy-MM-dd-HH-mm-ss'
-                    bat "git commit --message='Build ID: $date'"
-                    bat 'git push'
+                    def %BUILD_ID% = env.BUILD_NUMBER
+                    def commitMessage = "Build ID: ${buildId}"
+                    sh "git commit -am '${commitMessage}'"
+                    sh "git push origin main"
                 }
             }
         }
