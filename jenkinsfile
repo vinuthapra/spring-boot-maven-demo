@@ -19,6 +19,17 @@ pipeline {
                     bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_ID%'
                 }
             }
-        }
-    }
+      stage('Build') {
+         steps {
+            script {
+               sh '''
+                  BUILD_ID=$(date +%Y-%m-%d-%H-%M-%S)
+                  git commit --message="Build ID: $BUILD_ID"
+                  git push
+               '''
+            }
+         }
+      }
+   }
+}
 
