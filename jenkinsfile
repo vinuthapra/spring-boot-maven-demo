@@ -20,7 +20,6 @@ pipeline {
             }
         }
         stage('Commit Build ID') {
-            stage('Commit') {
               steps {
         // Get the Build ID
         def buildId = env.BUILD_ID
@@ -36,5 +35,5 @@ pipeline {
     }
             }
         }
-    }
+    
 
