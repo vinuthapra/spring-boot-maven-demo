@@ -20,9 +20,21 @@ pipeline {
             }
         }
         stage('Commit Build ID') {
-            steps {
-                bat 'echo "Commit ID: %GITHUB_SHA%, Build ID: %BUILD_ID%"'
+            stage('Commit') {
+              steps {
+        // Get the Build ID
+        def buildId = env.BUILD_ID
+        
+        // Set the commit message with the Build ID
+        def commitMessage = "Build ${buildId}"
+        
+        // Add the commit with the Build ID
+        bat 'git add .'
+        bat "git commit -m \"${commitMessage}\""
+        bat 'git push'
+      }
+    }
             }
         }
     }
-}
+
