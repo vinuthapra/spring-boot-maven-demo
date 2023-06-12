@@ -6,26 +6,28 @@ pipeline {
     stages {
         stage('SCM checkout') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],
-                          extensions: [[$class: 'ChangelogToWorkspace']]])
                 script {
-                    bat "git tag -a ${env.BUILD_VERSION} -m 'Build number: ${env.BUILD_NUMBER}'"
-                    bat "git push origin ${env.BUILD_VERSION}"
+                    // Clone the Git repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']]])
+
+                    // Update the commit message
+                    sh "git checkout -b ${BUILD_VERSION}"
+                    sh "git commit --amend -m 'Build number: ${BUILD_NUMBER}'"
+                    sh "git push origin ${BUILD_VERSION}"
                 }
             }
         }
         stage('Build') {
             steps {
-                bat 'mvn compile'
-                bat 'mvn clean'
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn compile'
+                sh 'mvn clean'
+                sh 'mvn clean package -DskipTests'
             }
         }
         stage('Copy Jars') {
             steps {
-                bat "mkdir ${env.BUILD_VERSION}"
-                bat "copy target/demo-0.0.1-SNAPSHOT.jar ${env.BUILD_VERSION}"
+                sh "mkdir ${BUILD_VERSION}"
+                sh "cp target/demo-0.0.1-SNAPSHOT.jar ${BUILD_VERSION}"
             }
         }
     }
