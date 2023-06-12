@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     // Clone the Git repository
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']]])
+                   checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
 
                     // Update the commit message
                     sh "git checkout -b ${BUILD_VERSION}"
