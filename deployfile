@@ -23,6 +23,6 @@ pipeline {
         }
         cp %BUILD_ID deploy
         cd deploy
-        java -jar
+        java -jar DeviceMotionEvent.jar
 }
 }

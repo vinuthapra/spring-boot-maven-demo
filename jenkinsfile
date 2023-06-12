@@ -1,9 +1,18 @@
 pipeline {
     agent any
+    environment {
+        BUILD_VERSION = "Build_${BUILD_NUMBER}"
+    }
     stages {
-        stage('scm checkout') {
+        stage('SCM checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/vinuthapra/spring-boot-maven-demo.git']]])
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/main']],
+                          extensions: [[$class: 'ChangelogToWorkspace']]])
+                script {
+                    bat "git tag -a ${env.BUILD_VERSION} -m 'Build number: ${env.BUILD_NUMBER}'"
+                    bat "git push origin ${env.BUILD_VERSION}"
+                }
             }
         }
         stage('Build') {
@@ -13,13 +22,11 @@ pipeline {
                 bat 'mvn clean package -DskipTests'
             }
         }
-        stage('copy jars') {
+        stage('Copy Jars') {
             steps {
-                bat 'mkdir Build_%BUILD_NUMBER%'
-                bat 'copy target/demo-0.0.1-SNAPSHOT.jar Build_%BUILD_NUMBER%'
+                bat "mkdir ${env.BUILD_VERSION}"
+                bat "copy target/demo-0.0.1-SNAPSHOT.jar ${env.BUILD_VERSION}"
             }
         }
-        }
+    }
 }
-    
-
