@@ -22,7 +22,7 @@ pipeline {
         
         // cp %BUILD_ID deploy
         // cd deploy
-       sh 'demo-0.0.1-SNAPSHOT.jar'
+       sh '$WORKSPACE/demo-0.0.1-SNAPSHOT.jar'
             }
         }
 }
