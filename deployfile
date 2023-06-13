@@ -22,7 +22,7 @@ pipeline {
         
         // cp %BUILD_ID deploy
         // cd deploy
-        sh 'cd ${WORKSPACE}/Build_%BUILD_NUMBER%/'
+        sh 'cd C:\ProgramData\Jenkins\.jenkins\workspace\demo/Build_%BUILD_NUMBER%/'
        sh 'java -jar demo-0.0.1-SNAPSHOT.jar'
 
             }
